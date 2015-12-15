@@ -27,6 +27,10 @@ bool ModuleSceneIntro::Start()
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
+	floor.size = vec3(100,0,1100);
+	floor.color = Color(0.1,0.7,1,1);
+	App->physics->AddBody(floor, 0.0f);
+
 	// ###### CIRCUITO ######
 
 	// start
@@ -95,6 +99,45 @@ bool ModuleSceneIntro::Start()
 	room1_right_c.SetRotation(45, vec3(0, 1, 0));
 	App->physics->AddBody(room1_right_c, 0.0f);
 
+	//obstacles room 1
+
+	room1_obstacle_a.radius = 5;
+	room1_obstacle_a.SetPos(0,0,165);
+	App->physics->AddBody(room1_obstacle_a, 0.0f);
+
+	room1_obstacle_b.radius = 5;
+	room1_obstacle_b.SetPos(20, 0, 185);
+	App->physics->AddBody(room1_obstacle_b, 0.0f);
+
+	room1_obstacle_c.radius = 5;
+	room1_obstacle_c.SetPos(-20, 0, 185);
+	App->physics->AddBody(room1_obstacle_c, 0.0f);
+
+	room1_obstacle_d.radius = 5;
+	room1_obstacle_d.SetPos(0, 0, 205);
+	App->physics->AddBody(room1_obstacle_d, 0.0f);
+
+	room1_obstacle_e.radius = 5;
+	room1_obstacle_e.SetPos(40, 0, 205);
+	App->physics->AddBody(room1_obstacle_e, 0.0f);
+
+	room1_obstacle_f.radius = 5;
+	room1_obstacle_f.SetPos(-40, 0, 205);
+	App->physics->AddBody(room1_obstacle_f, 0.0f);
+
+	room1_obstacle_g.radius = 5;
+	room1_obstacle_g.SetPos(20, 0, 225);
+	App->physics->AddBody(room1_obstacle_g, 0.0f);
+
+	room1_obstacle_h.radius = 5;
+	room1_obstacle_h.SetPos(-20, 0, 225);
+	App->physics->AddBody(room1_obstacle_h, 0.0f);
+
+	room1_obstacle_i.radius = 5;
+	room1_obstacle_i.SetPos(0, 0, 245);
+	App->physics->AddBody(room1_obstacle_i, 0.0f);
+
+
 	// hall 2
 	hall2_left.size = vec3(2, 10, 30);
 	hall2_left.SetPos(10, 4, 279);
@@ -152,6 +195,10 @@ bool ModuleSceneIntro::Start()
 	room2_right_b.SetRotation(45, vec3(0, 1, 0));
 	App->physics->AddBody(room2_right_b, 0.0f);
 
+	room2_obstacle.radius = 15;
+	room2_obstacle.SetPos(0, 0, 425);
+	App->physics->AddBody(room2_obstacle, 0.0f);
+
 	// finish
 	finish_left.size = vec3(2, 10, 50);
 	finish_left.SetPos(10, 4, 485);
@@ -184,6 +231,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	sensor->GetTransform(&s.transform);
 	s.Render();
 
+	floor.Render();
+
 	// ###### CIRCUITO ######
 
 	// start
@@ -209,6 +258,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	room1_left_c.Render();
 	room1_right_c.Render();
 
+	room1_obstacle_a.Render();
+	room1_obstacle_b.Render();
+	room1_obstacle_c.Render();
+	room1_obstacle_d.Render();
+	room1_obstacle_e.Render();
+	room1_obstacle_f.Render();
+	room1_obstacle_g.Render();
+	room1_obstacle_h.Render();
+	room1_obstacle_i.Render();
+
 	// hall 2
 	hall2_left.Render();
 	hall2_right.Render();
@@ -228,6 +287,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	room2_left_b.Render();
 	room2_right_b.Render();
+
+	room2_obstacle.Render();
 
 	//finish
 	finish_left.Render();

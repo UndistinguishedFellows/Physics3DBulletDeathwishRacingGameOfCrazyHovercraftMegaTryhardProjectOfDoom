@@ -25,6 +25,8 @@ public:
 	Cube s;
 	PhysBody3D* sensor;
 
+	Cube floor;
+
 	// CIRCUITO
 	//start
 	Cube start_left;
@@ -49,6 +51,16 @@ public:
 	Cube room1_left_c;
 	Cube room1_right_c;
 
+	Sphere room1_obstacle_a;
+	Sphere room1_obstacle_b;
+	Sphere room1_obstacle_c;
+	Sphere room1_obstacle_d;
+	Sphere room1_obstacle_e;
+	Sphere room1_obstacle_f;
+	Sphere room1_obstacle_g;
+	Sphere room1_obstacle_h;
+	Sphere room1_obstacle_i;
+
 	//hall 2
 	Cube hall2_left;
 	Cube hall2_right;
@@ -68,6 +80,8 @@ public:
 
 	Cube room2_left_b;
 	Cube room2_right_b;
+
+	Sphere room2_obstacle;
 
 	//finish
 	Cube finish_left;
