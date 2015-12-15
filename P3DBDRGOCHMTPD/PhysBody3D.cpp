@@ -20,6 +20,10 @@ void PhysBody3D::Push(float x, float y, float z)
 	body->applyCentralImpulse(btVector3(x, y, z));
 }
 
+btRigidBody* PhysBody3D::GetBody() const
+{
+	return body;
+}
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {

@@ -21,7 +21,8 @@ public:
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
 	void SetFriction();
-
+	btRigidBody* GetBody() const;
+	
 private:
 	btRigidBody* body = nullptr;
 
