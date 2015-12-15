@@ -9,6 +9,21 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
 
+
+class Hovercaft
+{
+public:
+	PhysBody3D* base = nullptr;
+	PhysBody3D* fan = nullptr;
+
+	Cube p_base;
+	Cylinder p_fan;
+
+	Hovercaft();
+	~Hovercaft();
+};
+
+
 class ModulePlayer : public Module
 {
 public:
@@ -18,17 +33,16 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+	Hovercaft* createHovercraft();
 
 public:
 
-	PhysVehicle3D* vehicle;
-	float turn;
 	float acceleration;
 	float brake;
 
 
 	//Testing variables
-	Cube s;
-	PhysBody3D* car;
+
+	Hovercaft* car;
 
 };
