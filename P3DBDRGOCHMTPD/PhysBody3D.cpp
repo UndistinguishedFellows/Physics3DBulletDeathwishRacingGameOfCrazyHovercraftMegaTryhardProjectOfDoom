@@ -24,6 +24,10 @@ btRigidBody* PhysBody3D::GetBody() const
 {
 	return body;
 }
+void PhysBody3D::activate(bool activation)
+{
+	body->forceActivationState(activation);
+}
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {

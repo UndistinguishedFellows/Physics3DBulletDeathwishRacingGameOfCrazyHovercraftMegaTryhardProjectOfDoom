@@ -40,18 +40,19 @@ update_status ModulePlayer::Update(float dt)
 	mat4x4 mBase;
 	car->fan->GetTransform(&mBase);
 	//car->base->Push(0, 0.1f, 0);
-
 	car->base->GetTransform(&car->p_base.transform);
 	car->fan->GetTransform(&car->p_fan.transform);
 	car->p_base.Render();
 	car->p_fan.Render();
 
+
+	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
+		car->base->activate(true);
 		mat4x4 m;
 		car->fan->GetTransform(&m);
 
-		//car->fan->Push(m[2]*0.5f, m[6]*0.5f, m[10]*0.5f);
 		car->fan->Push(-m.M[0] * 5, -m.M[1] * 5, -m.M[2] * 5);
 
 		//car->fan->Push(0.5f, 0.5f, 0.5f);
@@ -59,17 +60,30 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		
+		car->fan->activate(true);
+		car->fanHinge->enableMotor(true);
+		btRigidBody* b = car->fan->GetBody();
+		b->applyTorque({ 0, 4, 0 });
+		car->fanHinge->enableMotor(false);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-
+		car->fan->activate(true);
+		car->fanHinge->enableMotor(true);
+		btRigidBody* b = car->fan->GetBody();
+		b->applyTorque({ 0, -4, 0 });
+		car->fanHinge->enableMotor(false);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
+		car->base->activate(true);
+		mat4x4 m;
+		car->fan->GetTransform(&m);
 
+		//car->fan->Push(m[2]*0.5f, m[6]*0.5f, m[10]*0.5f);
+		car->fan->Push(m.M[0] * 10, m.M[1] * 10, m.M[2] * 10);
 	}
 
 	char title[80];
@@ -87,24 +101,25 @@ update_status ModulePlayer::Update(float dt)
 
 Hovercaft* ModulePlayer::createHovercraft()
 {
-	mat4x4 rotation;
-
-	Hovercaft* h = new Hovercaft({3, 1, 6 }, {2, 0.5f});
-	h->base = App->physics->AddBody(h->p_base, 10.0f);
-	h->fan = App->physics->AddBody(h->p_fan);
+	/*mat4x4 rotation;
 	
 	h->fan->GetTransform(&rotation);
 	rotation.rotate(90, { 0, 1, 0 });
-	h->fan->SetTransform(&rotation);
+	h->fan->SetTransform(&rotation)*/
+
+	Hovercaft* h = new Hovercaft({6, 1, 3 }, {2, 0.5f});
+	h->base = App->physics->AddBody(h->p_base, 100);
+	h->fan = App->physics->AddBody(h->p_fan, 10);
 
 	h->base->SetPos(0, 5, 0);
 	h->fan->SetPos(0, 7, 0);
+	
 	//h->fan->SetPos()
 	//h->p_base.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-
 	
-	//App->physics->AddConstraintHinge(*h->base, *h->fan, { 0, h->baseSize.y / 2 + 0.5f, -h->baseSize.z / 2 - 0.5f }, { h->fanSize.x, , 0 }, { 0, 1, 0 }, { 0, 1, 0 })->setLimit(0, 0);
-	App->physics->AddConstraintHinge(*h->base, *h->fan, { 0, h->baseSize.y / 2, -h->baseSize.z / 2 }, { 0, -h->fanSize.x - 0.1f, 0 }, { 0, 1, 0 }, { 0, 1, 0 })->setLimit(4, 3.14f*1.5f + 3.14 / 6);
+	h->fanHinge = App->physics->AddConstraintHinge(*h->base, *h->fan, { h->baseSize.x/2, h->baseSize.x/2, 0 }, { 0, h->fanSize.x/2-0.5f, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
+	h->fanHinge->setLimit(-0.349f, 0.349);
+
 	//h->p_base.SetPos(0, 2, 0);
 	//h->p_fan.SetPos(1.5f, 4, 0);
 

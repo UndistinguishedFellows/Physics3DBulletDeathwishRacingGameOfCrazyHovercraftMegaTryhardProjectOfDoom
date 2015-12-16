@@ -22,6 +22,7 @@ public:
 	bool IsSensor() const;
 	void SetFriction();
 	btRigidBody* GetBody() const;
+	void activate(bool activationState);
 	
 private:
 	btRigidBody* body = nullptr;

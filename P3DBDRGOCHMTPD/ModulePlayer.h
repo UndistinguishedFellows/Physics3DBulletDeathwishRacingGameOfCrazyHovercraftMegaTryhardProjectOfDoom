@@ -19,6 +19,8 @@ public:
 	Cube p_base;
 	Cylinder p_fan;
 
+	btHingeConstraint* fanHinge;
+
 	vec3 baseSize;
 	vec2 fanSize;
 	Hovercaft(vec3, vec2);
