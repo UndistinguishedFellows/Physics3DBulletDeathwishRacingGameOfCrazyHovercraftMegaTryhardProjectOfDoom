@@ -23,6 +23,8 @@ public:
 
 	vec3 baseSize;
 	vec2 fanSize;
+	float force;
+	vec3 fanTorque;
 	Hovercaft(vec3, vec2);
 	~Hovercaft();
 };

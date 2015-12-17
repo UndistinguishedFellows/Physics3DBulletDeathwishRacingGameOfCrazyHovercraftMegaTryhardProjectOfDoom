@@ -17,10 +17,11 @@ public:
 	void Push(float x, float y, float z);
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
+	void GetRotationTransform(float* matrix) const;
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
-	void SetFriction();
+	void SetFriction(int mu);
 	btRigidBody* GetBody() const;
 	void activate(bool activationState);
 	

@@ -36,6 +36,10 @@ void PhysBody3D::GetTransform(float* matrix) const
 		body->getWorldTransform().getOpenGLMatrix(matrix);
 	}
 }
+void PhysBody3D::GetRotationTransform(float* matrix) const
+{
+	
+}
 
 // ---------------------------------------------------------
 void PhysBody3D::SetTransform(const float* matrix) const
@@ -75,8 +79,7 @@ bool PhysBody3D::IsSensor() const
 	return is_sensor;
 }
 
-void PhysBody3D::SetFriction()
+void PhysBody3D::SetFriction(int mu)
 {
-	body->setFriction(10);
-	
+	body->setFriction(mu);	
 }
