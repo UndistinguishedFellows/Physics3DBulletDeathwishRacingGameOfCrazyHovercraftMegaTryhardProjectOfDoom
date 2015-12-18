@@ -15,6 +15,12 @@ ModuleSceneIntro::~ModuleSceneIntro()
 bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
+
+	win_fx = App->audio->LoadFx("Game/win.wav");
+	lose_fx = App->audio->LoadFx("Game/lose.wav");
+
+	App->audio->PlayMusic("Game/song.wav",1.0f);
+
 	bool ret = true;
 
 	win_lose = 0;
@@ -245,9 +251,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Plane p(0, 1, 0, 0);
 	//p.axis = true;
 	//p.Render();
-
 	//loss update
 	if (chrono > time_to_win){
+		App->audio->PlayFx(lose_fx);
 		win_lose = 2;
 		time->Stop();
 		App->player->car->base->SetPos(0, 3, 0);
@@ -349,6 +355,7 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	LOG("Hit!");
+	App->audio->PlayFx(win_fx);
 	win_lose = 1;
 	time->Stop();
 	last_time = chrono;

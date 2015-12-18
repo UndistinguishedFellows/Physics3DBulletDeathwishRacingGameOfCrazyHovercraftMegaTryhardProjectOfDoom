@@ -24,6 +24,9 @@ public:
 public:
 	int win_lose;
 
+	unsigned int win_fx;
+	unsigned int lose_fx;
+
 	Timer* time;
 	float time_to_win;
 	float chrono;
