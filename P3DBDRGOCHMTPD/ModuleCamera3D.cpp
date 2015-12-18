@@ -122,7 +122,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 
 			//App->camera->Look(vec3(matrix.M[12]+10, matrix.M[13] + 7, matrix.M[14]-10) - Z * 10, vec3(matrix[12], matrix[13] + 2, matrix[14]), true);
-			App->camera->Look(vec3(matrix.M[12] + 10, matrix.M[13] + 7, matrix.M[14] - 10) - Z * 10, vec3(matrix[12], matrix[13] + 2, matrix[14]), true);
+			App->camera->Look(vec3(matrix.M[12] + 10, matrix.M[13] + 20, matrix.M[14] - 15) - Z * 10, vec3(matrix[12], matrix[13] + 2, matrix[14]), true);
 		}
 	}
 
