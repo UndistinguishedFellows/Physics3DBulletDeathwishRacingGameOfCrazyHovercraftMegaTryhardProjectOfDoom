@@ -37,6 +37,8 @@ public:
 
 	// CIRCUITO
 
+	float wall_altitude;
+
 	//start
 	Cube start_back;
 	Cube start_left;
