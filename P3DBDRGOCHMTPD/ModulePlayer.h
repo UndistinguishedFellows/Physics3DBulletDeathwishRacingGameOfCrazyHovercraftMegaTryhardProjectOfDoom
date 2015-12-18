@@ -51,4 +51,14 @@ public:
 
 	Hovercaft* car;
 
+	//Camera Variables
+	mat4x4 pivot;
+	float speed_cam;
+	vec3 hovercraft_pos;
+	btVector3 hovercraft_vector;
+	vec3 hovercraft_f;
+	vec3 dist_to_hovercraft;
+	vec3 camera_new_pos;
+	vec3 camera_pos;
+	vec3 reference;
 };

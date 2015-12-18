@@ -22,6 +22,11 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
+	Timer* time;
+	float chrono;
+	float last_time;
+	float best_time;
+
 	Cube s;
 	PhysBody3D* sensor;
 

@@ -17,10 +17,17 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	//timer
+	time = new Timer();
+	chrono = 0.0f;
+	last_time = 0.0f;
+	best_time = 0.0f;
+	time->Start();
+
 	App->camera->Move(vec3(0.0f, 50.0f, -10.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	s.size = vec3(5, 3, 1);
+	s.size = vec3(20, 5, 1);
 	s.SetPos(0, 2.5f, 20);
 
 	sensor = App->physics->AddBody(s, 0.0f);
@@ -224,9 +231,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	//Plane p(0, 1, 0, 0);
+	//p.axis = true;
+	//p.Render();
+
+	chrono = time->Read()/1000.0f;
+
+	char title[80];
+	//sprintf_s(title, "%.1f Km/h");
+	sprintf_s(title, "TIME: %.2f s  LAST: %.2f s  BEST: %.2f s",chrono,last_time,best_time);
+	App->window->SetTitle(title);
 
 	sensor->GetTransform(&s.transform);
 	s.Render();
@@ -302,5 +316,10 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	LOG("Hit!");
+	time->Stop();
+	last_time = chrono;
+	if (last_time < best_time || best_time == 0) best_time = last_time;
+	time->Start();
+	App->player->car->base->SetPos(0, 3, 0);
 }
 

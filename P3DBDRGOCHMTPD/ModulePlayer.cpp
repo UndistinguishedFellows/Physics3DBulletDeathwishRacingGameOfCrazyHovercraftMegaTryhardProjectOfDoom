@@ -19,6 +19,10 @@ bool ModulePlayer::Start()
 
 	//s.SetPos(0, 0, 0);
 	car = createHovercraft();
+	
+	speed_cam = 1.09f;
+	dist_to_hovercraft = { -15.0f, 28.0f, -15.0f };
+
 	return true;
 }
 
@@ -33,6 +37,22 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+
+	//Camara
+	/*car->base->GetBody.SetPos->GetTransform(&pivot);
+	hovercraft_pos.Set(pivot.M[0], pivot.M[4], pivot.M[8]);
+	//hovercraft_vector = car->base->GetTransform->getForwardVector();
+	car->base->GetRotationTransform(&pivot);
+	hovercraft_f.Set(pivot.M[3], pivot.M[4], pivot.M[5]);
+	
+	//camera_new_pos = { hovercraft_pos.x + (hovercraft_f.x * dist_to_hovercraft.x), hovercraft_pos.y + hovercraft_f.y + dist_to_hovercraft.y, hovercraft_pos.z + (hovercraft_f.z * dist_to_hovercraft.z) };
+	camera_new_pos = { hovercraft_pos.x + (dist_to_hovercraft.x), hovercraft_pos.y + dist_to_hovercraft.y, hovercraft_pos.z + (dist_to_hovercraft.z) };
+
+	camera_pos = camera_new_pos - App->camera->Position;
+	reference.Set(hovercraft_pos.x, hovercraft_pos.y, hovercraft_pos.z);
+
+	App->camera->Look(App->camera->Position + (speed_cam * camera_pos), reference);
+	App->camera->Position.Set(hovercraft_pos.x, hovercraft_pos.y + 30, hovercraft_pos.z);*/
 
 	car->base->GetTransform(&car->p_base.transform);
 	car->fan->GetTransform(&car->p_fan.transform);
@@ -89,11 +109,6 @@ update_status ModulePlayer::Update(float dt)
 		b->setAngularVelocity({ 0, 0, 0 });
 	}
 
-
-	char title[80];
-	sprintf_s(title, "%.1f Km/h");
-	App->window->SetTitle(title);
-
 	mat4x4 m;
 	car->fan->GetTransform(&m);
 
@@ -114,8 +129,8 @@ Hovercaft* ModulePlayer::createHovercraft()
 	h->base = App->physics->AddBody(h->p_base, 100);
 	h->fan = App->physics->AddBody(h->p_fan, 10);
 
-	h->base->SetPos(0, 5, 0);
-	h->fan->SetPos(0, 7, 0);
+	h->base->SetPos(0, 2, 0);
+	h->fan->SetPos(0, 4, 0);
 
 	h->base->GetTransform(&rotation);
 	rotation.rotate(90, { 0, 1, 0 });
