@@ -167,7 +167,7 @@ Hovercaft::Hovercaft(vec3 _baseSize, vec2 _fanSize)
 	fanSize = _fanSize;
 
 	force = 10.0f;
-	fanTorque = { 0, 10, 0 };
+	fanTorque = { 0, 100, 0 };
 
 
 }
