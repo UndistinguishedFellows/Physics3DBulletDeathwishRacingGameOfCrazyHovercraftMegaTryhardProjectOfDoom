@@ -39,10 +39,10 @@ update_status ModulePlayer::Update(float dt)
 {
 
 	//Camara
-	/*car->base->GetBody.SetPos->GetTransform(&pivot);
-	hovercraft_pos.Set(pivot.M[0], pivot.M[4], pivot.M[8]);
+	//car->base->GetBody.SetPos->GetTransform(&pivot);
+	//hovercraft_pos.Set(pivot.M[0], pivot.M[4], pivot.M[8]);
 	//hovercraft_vector = car->base->GetTransform->getForwardVector();
-	car->base->GetRotationTransform(&pivot);
+	/*car->base->GetRotationTransform(&pivot);
 	hovercraft_f.Set(pivot.M[3], pivot.M[4], pivot.M[5]);
 	
 	//camera_new_pos = { hovercraft_pos.x + (hovercraft_f.x * dist_to_hovercraft.x), hovercraft_pos.y + hovercraft_f.y + dist_to_hovercraft.y, hovercraft_pos.z + (hovercraft_f.z * dist_to_hovercraft.z) };
@@ -52,8 +52,10 @@ update_status ModulePlayer::Update(float dt)
 	reference.Set(hovercraft_pos.x, hovercraft_pos.y, hovercraft_pos.z);
 
 	App->camera->Look(App->camera->Position + (speed_cam * camera_pos), reference);
-	App->camera->Position.Set(hovercraft_pos.x, hovercraft_pos.y + 30, hovercraft_pos.z);*/
-
+	App->camera->Position.Set(hovercraft_pos.x, hovercraft_pos.y + 30, hovercraft_pos.z);
+	*/
+	
+	
 	car->base->GetTransform(&car->p_base.transform);
 	car->fan->GetTransform(&car->p_fan.transform);
 	car->p_base.Render();
@@ -140,7 +142,7 @@ Hovercaft* ModulePlayer::createHovercraft()
 	rotation.rotate(90, { 0, 1, 0 });
 	h->fan->SetTransform(&rotation);
 
-	h->base->SetFriction(1);
+	h->base->SetFriction(1.0f);
 
 	//btRigidBody* b = car->base->GetBody();
 	
@@ -166,7 +168,7 @@ Hovercaft::Hovercaft(vec3 _baseSize, vec2 _fanSize)
 	baseSize = _baseSize;
 	fanSize = _fanSize;
 
-	force = 10.0f;
+	force = 20.0f;
 	fanTorque = { 0, 100, 0 };
 
 

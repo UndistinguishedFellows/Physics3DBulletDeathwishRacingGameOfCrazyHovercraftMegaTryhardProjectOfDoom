@@ -19,11 +19,11 @@ public:
 	float* GetViewMatrix();
 
 private:
-
+	bool debug;
 	void CalculateViewMatrix();
 
 public:
-	
+	PhysBody3D* followingBody;
 	vec3 X, Y, Z, Position, Reference;
 
 private:

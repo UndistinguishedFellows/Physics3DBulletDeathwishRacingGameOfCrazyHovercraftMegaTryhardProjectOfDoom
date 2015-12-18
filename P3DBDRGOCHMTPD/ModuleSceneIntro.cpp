@@ -28,7 +28,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	s.size = vec3(20, 5, 1);
-	s.SetPos(0, 2.5f, 20);
+	s.SetPos(0, 2.5f, /*485*/500);
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
@@ -321,5 +321,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (last_time < best_time || best_time == 0) best_time = last_time;
 	time->Start();
 	App->player->car->base->SetPos(0, 3, 0);
+	App->player->car->fan->SetPos(0, 4, -2);
 }
 
