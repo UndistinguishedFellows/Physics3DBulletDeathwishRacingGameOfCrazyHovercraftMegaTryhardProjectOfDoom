@@ -17,8 +17,11 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	win_lose = 0;
+
 	//timer
 	time = new Timer();
+	time_to_win = 90.0f;
 	chrono = 0.0f;
 	last_time = 0.0f;
 	best_time = 0.0f;
@@ -28,7 +31,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	s.size = vec3(20, 5, 1);
-	s.SetPos(0, 2.5f, /*485*/500);
+	s.SetPos(0, 2.5f, 270);
 
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
@@ -41,12 +44,17 @@ bool ModuleSceneIntro::Start()
 	// ###### CIRCUITO ######
 
 	// start
-	start_left.size = vec3(2, 10, 50);
-	start_left.SetPos(10, 4, 25);
+	start_back.size = vec3(2, 10, 22);
+	start_back.SetPos(0, 4, -8);
+	start_back.SetRotation(90, vec3(0, 1, 0));
+	App->physics->AddBody(start_back, 0.0f);
+
+	start_left.size = vec3(2, 10, 58);
+	start_left.SetPos(10, 4, 21);
 	App->physics->AddBody(start_left, 0.0f);
 
-	start_right.size = vec3(2, 10, 50);
-	start_right.SetPos(-10, 4, 25);
+	start_right.size = vec3(2, 10, 58);
+	start_right.SetPos(-10, 4, 21);
 	App->physics->AddBody(start_right, 0.0f);
 
 	// curve 1
@@ -235,11 +243,32 @@ update_status ModuleSceneIntro::Update(float dt)
 	//p.axis = true;
 	//p.Render();
 
+	//loss update
+	if (chrono > time_to_win){
+		win_lose = 2;
+		time->Stop();
+		App->player->car->base->SetPos(0, 3, 0);
+		App->player->car->fan->SetPos(0, 4, -2);
+		time->Start();
+	}
+
+
 	chrono = time->Read()/1000.0f;
 
 	char title[80];
-	//sprintf_s(title, "%.1f Km/h");
-	sprintf_s(title, "TIME: %.2f s  LAST: %.2f s  BEST: %.2f s",chrono,last_time,best_time);
+	switch (win_lose)
+	{
+	case 0:
+		sprintf_s(title, "TO WIN: %.2f s  TIME: %.2f s  LAST: %.2f s  BEST: %.2f s", time_to_win, chrono, last_time, best_time);
+		break;
+	case 1:
+		sprintf_s(title, "TO WIN: %.2f s  TIME: %.2f s  LAST: %.2f s  BEST: %.2f s  ### YOU WIN! ###", time_to_win, chrono, last_time, best_time);
+		break;
+	case 2:
+		sprintf_s(title, "TO WIN: %.2f s  TIME: %.2f s  LAST: %.2f s  BEST: %.2f s  ### YOU LOSE! ###", time_to_win, chrono, last_time, best_time);
+		break;
+	}
+
 	App->window->SetTitle(title);
 
 	sensor->GetTransform(&s.transform);
@@ -250,6 +279,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	// ###### CIRCUITO ######
 
 	// start
+	start_back.Render();
 	start_left.Render();
 	start_right.Render();
 	
@@ -316,6 +346,7 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	LOG("Hit!");
+	win_lose = 1;
 	time->Stop();
 	last_time = chrono;
 	if (last_time < best_time || best_time == 0) best_time = last_time;

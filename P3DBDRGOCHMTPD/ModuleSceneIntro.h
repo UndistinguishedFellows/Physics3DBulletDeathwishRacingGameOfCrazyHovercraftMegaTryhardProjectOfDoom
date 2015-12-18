@@ -22,7 +22,10 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
+	int win_lose;
+
 	Timer* time;
+	float time_to_win;
 	float chrono;
 	float last_time;
 	float best_time;
@@ -33,7 +36,9 @@ public:
 	Cube floor;
 
 	// CIRCUITO
+
 	//start
+	Cube start_back;
 	Cube start_left;
 	Cube start_right;
 
