@@ -21,7 +21,7 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
-	debug = true;
+	debug = false;
 
 	LOG("Setting up the camera");
 	bool ret = true;
